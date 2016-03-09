@@ -81,7 +81,10 @@ transfer，接收客户端发送的数据，做一些数据规整，检查之后
 
 transfer 提供jsonRpc接口和telnet接口两种方式，transfer自身是无状态的，挂掉一台或者多台不会有任何影响，同时transfer性能很高，每分钟可以转发超过500万条数据。
 
-transfer目前支持的业务后端，有三种，judge、graph、opentsdb。judge是我们开发的高性能告警判定组件，graph是我们开发的高性能数据存储、归档、查询组件，opentsdb是开源的时间序列数据存储服务。可以通过transfer的配置文件来开启。
+transfer目前支持的业务后端，有四种：
+1. Judge 是我们开发的高性能告警判定组件。
+2. Graph 是我们开发的高性能数据存储、归档、查询组件。
+3. OpenTSDB。是开源的时间序列数据存储服务。可以通过transfer的配置文件来开启。
 
 transfer的数据来源，一般有三种：
 1. falcon-agent采集的基础监控数据
@@ -178,7 +181,7 @@ c.RRA("MAX", 0.5, 720, 730)
 c.RRA("MIN", 0.5, 720, 730)
 ```
 
-对于原始数据，transfer会打一份到hbase，也可以直接使用opentsdb，transfer支持往opentsdb写入数据。
+对于原始数据，transfer会打一份到hbase，也可以直接使用opentsdb。
 
 # Contributors
 

@@ -4,7 +4,7 @@ Open-Falcon是一个比较大的分布式系统，有十几个组件。按照功
 
 ![deploy-structure](http://www.tycloudstart.com/xiaomi/deploy/pict/falcon-deploy.png)
 
-其中，基础组件以绿色标注圈住、作图链路组件以蓝色圈住、报警链路组件以红色圈住，橙色填充的组件为域名。OpenTSDB功能尚未完成。
+其中，基础组件以绿色标注圈住、作图链路组件以蓝色圈住、报警链路组件以红色圈住，橙色填充的组件为域名。
 
 ## 二进制快速安装
 

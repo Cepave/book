@@ -1,6 +1,12 @@
 # 问与答from qq群（373249123）
-## 报警
 
+## 系统安装
+
+Q: 打開 Portal 或是 FE  总是看到 Internal Server Error 或是叫我联系管理员，该怎么办？
+
+>A: 这种问题通常都是因为数据库连线异常，先检查一下 Portal/FE 与 MySQL 的连线。
+
+## 报警
 
 Q: 能不能当网络流量超过某个阀值的时候,发报警邮件把占用流量Top3的程序找出来?each (endpoint=xxx metric=yyy tag1=tttt)    expression可以这么写吗？ @聂安_小米
 

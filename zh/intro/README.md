@@ -85,6 +85,7 @@ transfer目前支持的业务后端，有四种：
 1. Judge 是我们开发的高性能告警判定组件。
 2. Graph 是我们开发的高性能数据存储、归档、查询组件。
 3. OpenTSDB。是开源的时间序列数据存储服务。可以通过transfer的配置文件来开启。
+4. InfluxDB。是开源的时间序列数据存储服务。可以通过transfer的配置文件来开启。
 
 transfer的数据来源，一般有三种：
 1. falcon-agent采集的基础监控数据

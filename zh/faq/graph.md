@@ -35,7 +35,7 @@ PS:索引数据存放在graph实例上，这里，只是通过task，触发了�
 4. 排查graph的问题。首先看下graph的日志```./var/app.log```是否有报错。然后确认下graph配置文件```./cfg.json```是否配置了正确的数据库db。没有发现问题?启动对graph的debug，方法见***Graph调试***一节。
 5. 排查transfer的问题。首先看transfer的日志```./var/app.log```是否有报错。然后确认配置文件```./cfg.json```是否enable了对graph集群的发送功能、是否正确配置了graph集群列表。确认完毕后，仍没有发现问题，怎么办？启动对transfer的debug，方法见***Transfer调试***一节。
 6. 排查agent的问题。打开agent的debug日志，观察数据上报情况。
-
+7. 检查 agent 时区是否与 dashboard 一致。
 
 
 ### Dashboard图表曲线有断点
@@ -111,7 +111,7 @@ curl -s "http://127.0.0.1:6071/statistics/all" | python -m json.tool
 # output
 {
     "data": [
-        { // counter of received items 
+        { // counter of received items
             "Cnt": 7,						// cnt
             "Name": "GraphRpcRecvCnt",	// name of counter
             "Other": {},					// other infos

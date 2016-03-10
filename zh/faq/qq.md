@@ -25,7 +25,7 @@ Q: 我想判断磁盘空间少于10%并且剩余空间少于1TB 才报警，有�
 >A: 目前架构不支持组合策略。
 
 Q: 我现在做了一个 ping 检测，会通过2各节点 A,B 去 ping，对应的是2个 tag，ping_server=A,ping_server=b，我现在是想做一个报警项，当 A,B 节点  到目标主机都不通我才报警。还有例子，比如我想设置报警，nginx 的连接数波动超过20% 而且链接数大于1000的才报警，可能有些机器业务的nginx 量很少，从连接数1到连接数2的波动就已经是100%了。
-    
+
 >A: 这个可以划归到集群监控的情况，一个集群两机器都宕机才报警，只有一个宕机不报警。组合策略如果是针对两个不同的采集项，那以现在的架构肯定是实现不了的，因为两个报警项可能落到了两个不同的 judge 实例上了。下个版本不会做，只能想办法在后面的组件比如 alarm 来搞，还挺复杂的
 
 
@@ -40,23 +40,23 @@ Q: 为什么未恢复报警那个模块，我把出现的报警标记为已解�
 
 
 Q: Expression 可以这样写吗？each(metric=net.port.listen port=8100 endpoint=1.2.3.4)
-    
+
 >A: 可以
-    
+
 Q: 报警有自动过滤的机制吗？
-    
+
 >A: 没有自动过滤的机制，hostgrp里配置了策略就会添加到相应的host上。报警判断时，假的host不可能上来数据，因此也就不会触发报警。进一步讲，这种没有数据上报就不报警可能不是用户希望看到。可以透过nodata的报警搞定之。
 
 
 Q: 同比环比报警可能会有一个问题, 就是误报的 case . 假设 A -> B -> C , 其中 B 是异常时间点. 到 B 这个点报警. 然后到 C 这个时间点恢复正常的话, 又会报警一次. 不知道大家有没有什么比较好的思路
-    
+
 >A: 同比环比的告警，用在实际的环境中，误报太多，缺乏实际的操作意义，所以我们不打算支持。只提供了流量突升突降的告警功能。
-    
+
 Q: 报警通知（邮件、短信、等等）在 Open-Falcon 代码里面没有，该如何实现？
-    
+
 >A: alarm将报警邮件内容写入redis队列，sender负责读取并且发送，你可以二次开发sender，让它不通过调用http接口实现邮件发送，或参考 [mail-provider](https://github.com/open-falcon/mail-provider) 以及本书中的'社区贡献'。
 
-    
+
 ## 数据
 
 
@@ -90,7 +90,7 @@ Q: 扩容时如何保留历史数据呢？
 
 ## 插件
 
-Q: 自定义的插件同步后，是否要重启一下agent，才会生效？  
+Q: 自定义的插件同步后，是否要重启一下agent，才会生效？
 
 >A: 不需要。curl -s "hostname:1988/plugin/update"，这样就能同步插件。
 
@@ -98,7 +98,7 @@ Q: 自定义的插件同步后，是否要重启一下agent，才会生效？
 ## 负载均衡
 
 Q: Open-Falcon 能做接口代理嗎？负载均衡建议怎么做呢？
-    
+
 >A: 域名解析到ip。用 domain.name:port访问。没有做接口代理。transfer大于1个实例时，ip+port{6060, 8433} 的方式需要配置transfer实例列表、不方便。建议用域名实现负载均衡。
     task叢集設定：https://github.com/open-falcon/task/blob/master/README.md
 
@@ -110,17 +110,17 @@ Q: Open-Falcon 能做接口代理嗎？负载均衡建议怎么做呢？
 Q: Open-Falcon 支持 Windows 监控吗？
 
 >A: 支持，请见本书中的'Windows 主机监控'。
-    
+
 Q: 请教各位大神，open-falcon怎么监控端口？我没有搜到net.port.listen这个metirc，只有cpu,mem,net
 
 >A: 要先配个模板，才会有port的metric,大概架构是，配置模板，metric是net.port.listen,tag里配置port=xxx，然后模板关联hostgroup，hostgroup里的host就会通过hbs获取到需要监测的port，然后探测上报
 
 Q: docker 中的 agent 一直出现 `index out of range` 的错误
-    
+
 >A: 刚才这个问题很典型，经过追查，问题是这样的：agent运行在docker容器里，docker容器限制了cpu个数，agent拿到了正确的cpu个数，比如宿主机是32个核，限制docker容器为2个核，agent就拿到了cpu核数为2 。于是准备了一个长度为2的数组来放置各个cpu的性能数据。但是，接下来agent要去读取/proc/stat，docker容器内部看到的/proc/stat文件内容和宿主机一般无二，于是看到了32个核，于是index out of range。
 
 Q: 建议用 Agent 做日志分析监控吗？
-    
+
 >A: Agent不采集日志文件，这么做日志监控不是个好的实践方式，我个人推荐的做法是业务程序自己在代码中catch住exception，有问题直接调用报警接口报警得了，RD 收到报警之后自己去查log，小米应该是有个scribe集群来收集日志，具体我也不清楚。
 
 
@@ -136,7 +136,7 @@ Q: 任何机器都可以访问 Transfer 会不会有安全性问题？
 Q: 组件之间怎么沟通的？
 
 >A: jsonrpc  tcp传输，编码为二进制传输的
-    
+
 Q: Open-Falcon 的架构图是用什么画的？
 
 >A: Mindmanager/PPT
@@ -151,4 +151,4 @@ Q: `too many open files` 是什么问题？
 Q: Open-Falcon 的未来计划？
 
 >A: https://github.com/XiaoMi/open-falcon/issues 一些接下来，要做的事情，我都会更新在这里（大家也可以提，思路更广一些） 有能力、有时间的朋友，可以认领一个或多个issue，或者配合撰写、贡献相关文档，都是热烈欢迎的。 特别是一些重度使用open-falcon的大户哈，希望能把你们自己的一些改进，也都推进到open-falcon的github仓库里哈：）【比如美团、金山云、快网、赶集之类的~~~】 接入并使用了Open-Falcon的公司，可以把相关信息追加到下面这个issue的评论中 https://github.com/XiaoMi/open-falcon/issues/4
-    
+
